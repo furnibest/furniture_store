@@ -5,11 +5,12 @@ const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
 
+// Inisialisasi Prisma Client
 const prisma = new PrismaClient();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Debug middleware - log all requests
+// Debug middleware - log semua request
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
@@ -19,23 +20,23 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json());
 
-// Determine uploads directory based on environment
+// Tentukan direktori uploads berdasarkan environment
 const isProduction = process.env.NODE_ENV === 'production';
 const uploadsDir = isProduction 
-  ? path.join('/tmp/uploads') // Use /tmp for Vercel (serverless)
+  ? path.join('/tmp/uploads') // Gunakan /tmp untuk Vercel (serverless)
   : path.join(__dirname, 'src/server/uploads');
 
-// Ensure uploads directory exists
+// Pastikan direktori uploads ada
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve static files from the React app
+// Serve file statis dari aplikasi React
 const clientBuildPath = path.join(__dirname, 'src/client/build');
 app.use(express.static(clientBuildPath));
 app.use('/uploads', express.static(uploadsDir));
 
-// Multer setup for image upload
+// Multer setup untuk upload gambar
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadsDir);
@@ -55,7 +56,8 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
     serverPath: __dirname,
-    clientBuildPath
+    clientBuildPath,
+    nodeVersion: process.version
   });
 });
 
@@ -163,12 +165,12 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
-// Serve React app for all other routes
+// Serve aplikasi React untuk semua rute lainnya
 app.get('*', (req, res) => {
   res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
-// Start server for local development
+// Start server untuk pengembangan lokal
 if (!isProduction) {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
@@ -181,5 +183,5 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-// For Vercel serverless deployment
+// Untuk deployment serverless di Vercel
 module.exports = app; 
