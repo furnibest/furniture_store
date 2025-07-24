@@ -1,6 +1,30 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/src/server/server.js" }
+  "outputDirectory": "src/client/build",
+  "builds": [
+    {
+      "src": "src/server/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "src/client/build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "src/server/server.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/server/server.js"
+    }
   ]
 } 
