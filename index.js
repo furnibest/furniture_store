@@ -32,7 +32,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Serve file statis dari aplikasi React
-const clientBuildPath = path.join(__dirname, 'src/client/build');
+const clientBuildPath = path.join(__dirname, 'public');
 app.use(express.static(clientBuildPath));
 app.use('/uploads', express.static(uploadsDir));
 

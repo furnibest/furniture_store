@@ -11,7 +11,7 @@
     "server": "nodemon index.js",
     "client": "cd src/client && npm run react-start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm run prisma:generate && cd src/client && npm install && npm run build",
+    "build": "cd src/client && npm install && npm run build && cd ../.. && rm -rf public/* && cp -r src/client/build/* public/",
     "vercel-build": "npm run build",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
