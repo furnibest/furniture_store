@@ -30,7 +30,9 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve uploads directory
+// Serve static files from the React app
+const clientBuildPath = path.join(__dirname, '../client/build');
+app.use(express.static(clientBuildPath));
 app.use('/uploads', express.static(uploadsDir));
 
 // Multer setup for image upload
@@ -53,7 +55,7 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
     serverPath: __dirname,
-    clientBuildPath: path.join(__dirname, '../client/build')
+    clientBuildPath
   });
 });
 
@@ -161,19 +163,13 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
+// Serve React app for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
+
 // Start server for local development
 if (!isProduction) {
-  // Serve static files locally
-  const clientBuildPath = path.join(__dirname, '../client/build');
-  app.use(express.static(clientBuildPath));
-  
-  // Serve React app for all other routes in local development
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api/') && !req.path.startsWith('/uploads/')) {
-      res.sendFile(path.join(clientBuildPath, 'index.html'));
-    }
-  });
-  
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
