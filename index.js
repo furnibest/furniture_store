@@ -31,11 +31,6 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve file statis dari aplikasi React
-const clientBuildPath = path.join(__dirname, 'public');
-app.use(express.static(clientBuildPath));
-app.use('/uploads', express.static(uploadsDir));
-
 // Multer setup untuk upload gambar
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -56,7 +51,7 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
     serverPath: __dirname,
-    clientBuildPath,
+    clientBuildPath: undefined, // Hapus clientBuildPath karena tidak digunakan
     nodeVersion: process.version
   });
 });
@@ -163,11 +158,6 @@ app.delete('/api/products/:id', async (req, res) => {
     console.error('Error deleting product:', error);
     res.status(500).json({ error: error.message });
   }
-});
-
-// Serve aplikasi React untuk semua rute lainnya
-app.get('*', (req, res) => {
-  res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
 // Start server untuk pengembangan lokal
