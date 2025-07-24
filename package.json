@@ -2,13 +2,13 @@
   "name": "atiga-furniture",
   "version": "1.0.0",
   "description": "Unified furniture store application with Prisma",
-  "main": "src/server/server.js",
+  "main": "index.js",
   "engines": {
     "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "node src/server/server.js",
-    "server": "nodemon src/server/server.js",
+    "start": "node index.js",
+    "server": "nodemon index.js",
     "client": "cd src/client && npm run react-start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "npm run prisma:generate && cd src/client && npm install && npm run build",
