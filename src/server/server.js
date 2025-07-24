@@ -12,7 +12,6 @@ const PORT = process.env.PORT || 5001;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Determine uploads directory based on environment
 const isProduction = process.env.NODE_ENV === 'production';
@@ -25,6 +24,9 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+// Serve static files from the React app
+const clientBuildPath = path.join(__dirname, '../client/build');
+app.use(express.static(clientBuildPath));
 app.use('/uploads', express.static(uploadsDir));
 
 // Logging middleware
@@ -45,6 +47,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // API Routes
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // GET all products
 app.get('/api/products', async (req, res) => {
@@ -151,8 +162,12 @@ app.delete('/api/products/:id', async (req, res) => {
 });
 
 // Serve React app for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+app.get('*', (req, res, next) => {
+  // Skip API routes
+  if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
+    return next();
+  }
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
 // Start server
