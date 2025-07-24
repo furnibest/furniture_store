@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faTags, faUsers, faChartBar, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faTags, faUsers, faChartBar } from '@fortawesome/free-solid-svg-icons';
 import AdminLayout from '../../components/admin/AdminLayout';
 import './AdminDashboard.css';
 
