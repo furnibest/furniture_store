@@ -1,0 +1,237 @@
+/* Info Order Hero Section */
+.infoorder-hero {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.infoorder-title {
+  font-size: 3.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.infoorder-subtitle {
+  font-size: 1.5rem;
+  max-width: 600px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.infoorder-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem 2rem;
+}
+
+.infoorder-section {
+  margin-bottom: 2.5rem;
+}
+
+.infoorder-section h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #bfa16a;
+  margin-bottom: 1rem;
+}
+
+.infoorder-steps {
+  padding-left: 1.2rem;
+  color: #333;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.infoorder-list {
+  padding-left: 1.2rem;
+  color: #333;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.infoorder-steps-bar {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 2.5rem 0 2.5rem 0;
+}
+.infoorder-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  max-width: 180px;
+  position: relative;
+}
+.infoorder-step-icon {
+  font-size: 2.2rem;
+  color: #bfa16a;
+  margin-bottom: 0.7rem;
+}
+.infoorder-step-title {
+  font-weight: bold;
+  font-size: 1.08rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+  text-align: center;
+}
+.infoorder-step-desc {
+  color: #666;
+  font-size: 0.97rem;
+  text-align: center;
+}
+.infoorder-step-arrow {
+  position: absolute;
+  right: -1.5rem;
+  top: 1.2rem;
+  font-size: 1.5rem;
+  color: #bfa16a;
+  font-weight: bold;
+}
+.infoorder-card-grid {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+.infoorder-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 260px;
+  max-width: 340px;
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.infoorder-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+}
+.infoorder-card-icon {
+  font-size: 2.1rem;
+  color: #bfa16a;
+  margin-bottom: 0.7rem;
+}
+.infoorder-card h3 {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.7rem;
+}
+.infoorder-card ul {
+  color: #666;
+  font-size: 0.98rem;
+  margin-bottom: 0.7rem;
+  text-align: left;
+  padding-left: 1.2rem;
+}
+.infoorder-card-contact {
+  background: #f7f7f7;
+  border: 1.5px solid #ececec;
+}
+.infoorder-card-contact a {
+  color: #25d366;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.infoorder-note {
+  color: #c00;
+  font-size: 0.98rem;
+  margin-top: 0.7rem;
+}
+.infoorder-section a {
+  color: #25d366;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .infoorder-hero {
+    height: 18vh;
+  }
+  .infoorder-title {
+    font-size: 1.5rem;
+  }
+  .infoorder-content {
+    padding: 2rem 1rem 3rem 1rem;
+  }
+}
+@media (max-width: 900px) {
+  .infoorder-hero {
+    min-height: 28vh;
+    height: auto;
+    padding: 2.5rem 1rem 2rem 1rem;
+    text-align: center;
+  }
+  .infoorder-title {
+    font-size: 2rem;
+  }
+  .infoorder-subtitle {
+    font-size: 1.1rem;
+  }
+  .infoorder-steps-bar {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: stretch;
+    margin: 1.2rem 0 1.2rem 0;
+  }
+  .infoorder-step {
+    min-width: 0;
+    max-width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    position: static;
+  }
+  .infoorder-step-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    margin-right: 0.7rem;
+  }
+  .infoorder-step-title {
+    font-size: 1rem;
+    margin-bottom: 0.1rem;
+    text-align: left;
+  }
+  .infoorder-step-desc {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .infoorder-step-arrow {
+    display: none;
+  }
+  .infoorder-card-grid {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1.2rem;
+  }
+  .infoorder-card {
+    min-width: 0;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+    font-size: 0.97rem;
+  }
+  .infoorder-card h3 {
+    font-size: 1.05rem;
+  }
+} 
