@@ -11,13 +11,14 @@
     "server": "nodemon index.js",
     "client": "cd src/client && npm run react-start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "cd src/client && npm install && npm run build && cd ../.. && rm -rf public/* && cp -r src/client/build/* public/",
+    "build": "npm run prisma:generate && cd src/client && npm install && npm run build && cd ../.. && rm -rf public/* && cp -r src/client/build/* public/",
     "vercel-build": "npm run build",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
-    "setup": "npm install && npm run prisma:generate && npm run prisma:migrate"
+    "setup": "npm install && npm run prisma:generate && npm run prisma:migrate",
+    "postinstall": "prisma generate"
   },
   "keywords": ["furniture", "e-commerce", "prisma", "react"],
   "author": "",
