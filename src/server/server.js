@@ -9,6 +9,12 @@ const prisma = new PrismaClient();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// Debug middleware - log all requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -24,16 +30,8 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve static files from the React app
-const clientBuildPath = path.join(__dirname, '../client/build');
-app.use(express.static(clientBuildPath));
+// Serve uploads directory
 app.use('/uploads', express.static(uploadsDir));
-
-// Logging middleware
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
 
 // Multer setup for image upload
 const storage = multer.diskStorage({
@@ -53,7 +51,9 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'ok', 
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    serverPath: __dirname,
+    clientBuildPath: path.join(__dirname, '../client/build')
   });
 });
 
@@ -161,17 +161,19 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
-// Serve React app for all other routes
-app.get('*', (req, res, next) => {
-  // Skip API routes
-  if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
-    return next();
-  }
-  res.sendFile(path.join(clientBuildPath, 'index.html'));
-});
-
-// Start server
+// Start server for local development
 if (!isProduction) {
+  // Serve static files locally
+  const clientBuildPath = path.join(__dirname, '../client/build');
+  app.use(express.static(clientBuildPath));
+  
+  // Serve React app for all other routes in local development
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api/') && !req.path.startsWith('/uploads/')) {
+      res.sendFile(path.join(clientBuildPath, 'index.html'));
+    }
+  });
+  
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
