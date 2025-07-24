@@ -23,8 +23,12 @@
       "dest": "src/server/server.js"
     },
     {
-      "src": "/(.*)",
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|json|svg))",
       "dest": "src/client/build/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/client/build/index.html"
     }
   ]
 } 
